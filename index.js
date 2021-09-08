@@ -42,6 +42,23 @@ client.connect(err => {
         })
       })
 
+      app.post('/addAdmin', (req, res) => {
+        const email = req.body;
+        admin.insertOne(email)
+      .then(result =>{
+        console.log(result.acknowledged)
+          res.json(result.acknowledged)
+      })
+    })
+
+    app.get('/admin', (req, res) => {
+        admin.find({})
+        .toArray((err, documents) => {
+          res.send(documents)
+        })
+      })
+
+
       app.get('/news/:id', (req, res) => {
         news.find({_id:ObjectId(req.params.id)})
         .toArray((err, documents)=>{
@@ -72,4 +89,4 @@ client.connect(err => {
 
 
 
-app.listen(port, () => { })
+app.listen(process.env.PORT || port, () => { })
