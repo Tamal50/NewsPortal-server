@@ -58,6 +58,13 @@ client.connect(err => {
         })
       })
 
+      app.post('/isAdmin', (req, res) => {
+        const email = req.body.email;
+        admin.find({ email: email })
+            .toArray((err, documents) => {
+                res.send(documents.length > 0);
+            })
+      })
 
       app.get('/news/:id', (req, res) => {
         news.find({_id:ObjectId(req.params.id)})
